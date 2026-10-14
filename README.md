@@ -1,126 +1,278 @@
-# ProteinGuard 🧬
+🧬 ProteinGuard
 
-> **Explainable Amino-Acid Mutation Analysis Platform**
+Understand the impact of amino acid mutations on protein structure and function.
 
-ProteinGuard is an open-source, explainable platform for exploring the biochemical and structural impact of amino-acid substitutions in proteins. It transforms raw sequence, structural, and evolutionary conservation data into clear, evidence-grounded scientific reasoning.
+ProteinGuard is a computational biology platform designed to help researchers explore amino-acid substitutions and investigate their potential effects on protein properties, conservation, structure, and function.
+
+By bringing together protein sequence analysis, structural visualization, physicochemical comparisons, and an AI-powered research assistant, ProteinGuard aims to make protein mutation analysis more accessible, interactive, and interpretable.
+
+«From amino acid changes to biological insights.»
 
 ---
 
-> ⚠️ **Scientific Disclaimer:** ProteinGuard provides computational research and educational insights. It does **NOT** diagnose disease, predict clinical outcomes, or replace experimental validation or professional medical advice.
+🚨 The Problem
+
+A single amino-acid substitution can influence a protein's stability, molecular interactions, structure, or biological function. However, investigating these effects often requires researchers to navigate multiple bioinformatics tools, databases, structural viewers, and scientific resources.
+
+For students and early-stage researchers, this fragmented workflow can make it difficult to connect a mutation with its possible molecular consequences.
+
+💡 Our Solution
+
+ProteinGuard brings important stages of protein mutation investigation into one platform.
+
+Users can explore amino-acid substitutions, compare physicochemical properties, investigate sequence conservation, visualize available protein structures, and use an AI research assistant to interpret evidence and identify missing information.
+
+Rather than treating every mutation as harmful or beneficial, ProteinGuard emphasizes evidence-based exploration, transparent limitations, and interpretable scientific reasoning.
 
 ---
 
-## 🎯 Architecture & Pipeline
+✨ Key Features
 
-```text
-Screen 2 (Mutation Lab)
-   ↓
-Mutation Object (e.g. P04637:A98V)
-   ↓
+1. 🧪 Mutation Lab
+
+- Explore amino-acid substitutions in protein sequences.
+- Validate mutation notation against the reference sequence.
+- Compare wild-type and mutant amino-acid properties.
+- Investigate possible implications for protein structure and function.
+
+2. ⚗️ Physicochemical Property Analysis
+
+Explore how amino-acid substitutions change molecular characteristics, including:
+
+- Molecular weight
+- Charge
+- Hydrophobicity
+- Polarity
+- Other relevant amino-acid properties supported by the analysis engine
+
+These comparisons help researchers understand the chemical differences introduced by a mutation.
+
+3. 🧬 Sequence Conservation Analysis
+
+Investigate conservation across related protein sequences using sequence alignment and conservation analysis.
+
+Conservation can provide clues about the potential importance of a residue, although it does not independently establish a mutation's functional or clinical effect.
+
+4. 🧊 3D Protein Explorer
+
+Explore available protein structures through interactive visualization.
+
+Depending on the available structure and analysis data, users can investigate:
+
+- Protein structure and secondary structure
+- Mutation-site localization
+- Nearby residues and spatial contacts
+- Local structural environments
+
+Structure-dependent results require a suitable structure and validated residue mapping. When structural evidence is unavailable, the platform should communicate that limitation instead of inventing contacts or distances.
+
+5. 🤖 AI-Powered Research Assistant
+
+ProteinGuard includes an AI research assistant designed to support scientific investigation.
+
+It is intended to help users explore questions such as:
+
+- Why might a mutation matter structurally?
+- Which physicochemical properties change?
+- Is the residue conserved across homologs?
+- Which nearby residues could be relevant?
+- What evidence is still missing?
+
+The assistant is designed to ground explanations in the available analysis and distinguish verified observations from hypotheses and predictions.
+
+AI provider: The language-model integration is configurable during development. Google AI Studio/Gemma 4 integration should be considered complete only after the selected model has been successfully connected and tested.
+
+6. 📄 Research Reports
+
+Generate research-oriented reports that organize mutation-analysis findings and supporting information for further investigation.
+
+Reports should distinguish available evidence, calculated properties, model-generated interpretations, and missing information.
+
+---
+
+🛠️ Technology Stack
+
+Layer| Technologies
+Frontend| React, TypeScript
+Backend| Python, FastAPI
+Scientific computing| Python-based sequence and physicochemical analysis
+Sequence conservation| Multiple sequence alignment and conservation analysis
+Protein structures| PDB/AlphaFold structure resources and 3D visualization
+AI assistant| Configurable language-model API integration
+Data exchange| REST APIs and structured analysis results
+
+The final dependency list and supported external services should be confirmed against the current repository.
+
+---
+
+🏗️ System Architecture
+
+User
+ │
+ ▼
+ProteinGuard Frontend
+ │
+ ├── Mutation Lab
+ ├── Property Comparison
+ ├── Sequence Conservation
+ ├── 3D Protein Explorer
+ └── Research Reports
+ │
+ ▼
 FastAPI Backend
-   ├── Physicochemical Engine (Side-chain volume, MW, charge, KD hydrophobicity)
-   ├── Conservation Engine (UniProt ortholog retrieval + Shannon entropy MSA alignment)
-   └── Structure Engine (RCSB PDB REST API + 6.0 Å spatial contact neighborhood + secondary structure)
-          ↓
-   Structured Evidence Object
-          ↓
-Screen 3 (Analysis Dashboard)
-          ↓
-Screen 4 (3D Viewer + Gemma 4 AI Assistant)
-```
+ │
+ ├── Mutation Analysis
+ ├── Amino Acid Properties
+ ├── Sequence Alignment
+ ├── Structure Retrieval
+ ├── Structural Analysis
+ └── AI Research Assistant
+       │
+       ▼
+   Configured AI Provider
+
+The modules work together to support an evidence-oriented workflow, from identifying an amino-acid substitution to exploring its possible molecular implications.
 
 ---
 
-## 📌 Implementation Roadmap & Screen Status
+🚀 Getting Started
 
-| Module / Screen | Description | Status |
-|---|---|---|
-| **Screen 1 — Landing Page** | Hero, interactive molecular metaphor, workflow, open source philosophy, Gemma 4 architecture, backend foundation | ✅ **Completed** |
-| **Screen 2 — Mutation Lab** | UniProt retrieval, sequence viewer, residue selector, mutation validation, property shifts, Mutation Playground (19 alternatives) | ✅ **Completed** |
-| **Screen 3 — Analysis Dashboard** | Multi-dimensional evidence dashboard: Shannon entropy sequence conservation, RCSB PDB structural context, 2D 6Å residue environment, independent 4-pillar evidence overview, side-by-side mutation comparison, mandatory limitations | ✅ **Completed** |
-| **Screen 4 — 3D Explorer + Gemma 4 AI Assistant** | 3D spatial micro-environment viewer & grounded Gemma 4 explanation layer | ⏳ **Next Step** |
+Prerequisites
 
----
+- Python 3.10 or a compatible version required by the project
+- Node.js and npm
+- Git
+- API credentials if the selected external AI or data services require them
 
-## 🔬 Screen 3 — Analysis Dashboard Features
+1. Clone the repository
 
-Screen 3 is the scientific evidence dashboard of ProteinGuard. It operates with strict separation between **DATA → COMPUTATION → EVIDENCE → INTERPRETATION**.
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd ProteinGuard
 
-### Key Computational Modules
-1. **Physicochemical Shifts Engine:** Evaluates molecular weight, KD hydrophobicity, net charge, volume, polarity, and side-chain class changes.
-2. **Sequence Conservation Engine:** Fetches UniProt homologous sequence sets, performs alignment window mapping, and calculates normalized **Shannon Entropy** ($H = -\sum p_i \log_2 p_i$) and residue frequency distributions.
-3. **Structural Context & Contacts Engine:** Integrates RCSB PDB REST API to retrieve experimental structures, map residue coordinates, identify secondary structure, solvent accessibility, and compute 6.0 Å 3D atomic contact neighborhoods.
-4. **Independent 4-Pillar Evidence Summary:** Displays evidence across 4 isolated categories without composite or fake risk scores.
-5. **Mutation Playground Comparison:** Allows comparing the active variant against any of the 19 alternative substitutions at the same position.
-6. **Scientific Limitations & Boundaries:** Clearly details methodological parameters and disclaimers.
+Replace the placeholder with the actual public repository URL.
 
----
+2. Set up the backend
 
-## ⚡ API Endpoints (Screen 3)
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/v1/analysis/{accession}/{position}/{mutant}` | Retrieves comprehensive structured analysis evidence |
-| `POST` | `/api/v1/conservation/analyze` | Calculates Shannon entropy and MSA residue frequencies |
-| `POST` | `/api/v1/structure/analyze` | Fetches PDB coordinates, secondary structure & 6.0 Å contacts |
-| `POST` | `/api/v1/mutations/compare` | Compares two substitutions at the same sequence position |
-
----
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **Framework:** React 19 + TypeScript (Strict Mode)
-- **Build Tool:** Vite 8
-- **Styling:** Tailwind CSS v4 (Vanilla dark scientific design system)
-- **Icons:** Lucide React & Custom SVG graphics
-- **Routing:** React Router DOM v7
-
-### Backend
-- **Framework:** Python 3.11+ / FastAPI
-- **Validation:** Pydantic v2
-- **Server:** Uvicorn (ASGI)
-- **Testing:** Pytest (17 unit & integration tests)
-
----
-
-## 🚀 Local Development Setup
-
-### 1. Prerequisites
-- **Node.js**: v18.0.0 or higher
-- **Python**: 3.10 or higher
-
----
-
-### 2. Backend Setup (FastAPI)
-
-```bash
 cd backend
 python -m venv .venv
-# Activate venv:
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
+
+Activate the environment.
+
+Windows PowerShell:
+
+.\.venv\Scripts\Activate.ps1
+
+Install the dependencies listed in the project:
+
 pip install -r requirements.txt
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
-```
 
-Verify backend endpoints:
-- Swagger Documentation: `http://127.0.0.1:8000/api/v1/docs`
+Configure the required environment variables according to the backend configuration. Keep API keys in a local ".env" file and never commit secrets to Git.
 
----
+Start the backend using the entry point and command documented in the repository.
 
-### 3. Frontend Setup (React + Vite)
+For example, if the application exposes "app.main:app":
 
-```bash
+uvicorn app.main:app --reload
+
+The API documentation is commonly available at:
+
+http://127.0.0.1:8000/docs
+
+3. Set up the frontend
+
+Open a new terminal:
+
 cd frontend
 npm install
 npm run dev
-```
 
-Open `http://localhost:5173`.
+Open the local URL printed by the development server.
+
+These commands assume the repository contains the corresponding scripts and entry points. Follow the actual project configuration if they differ.
 
 ---
 
-## 📜 License & Citation
+🔬 Example Workflow
 
-ProteinGuard is released under the **Apache 2.0 / MIT License**.
+1. Select or provide a supported protein sequence.
+2. Enter an amino-acid substitution.
+3. Validate the reference residue and mutation notation.
+4. Compare wild-type and mutant physicochemical properties.
+5. Explore conservation evidence where homologous sequences are available.
+6. Open a verified protein structure, if available, to investigate the mutation site.
+7. Ask the AI research assistant questions about the available evidence.
+8. Review missing information and export a research report.
+
+The availability of individual results depends on the input data, supported identifiers, external resources, and enabled analysis modules.
+
+---
+
+🛡️ Scientific Integrity and Limitations
+
+ProteinGuard is intended for computational research and educational exploration.
+
+- A predicted effect is not an experimentally measured result.
+- Sequence conservation alone does not prove functional importance.
+- A structural hypothesis does not establish causation.
+- Structural contacts require verified structure mapping.
+- Experimental fitness measurements are assay-specific.
+- DMS fitness scores must not be interpreted automatically as clinical pathogenicity.
+- Missing data must be reported transparently rather than fabricated.
+
+ProteinGuard is not a clinical diagnostic tool and should not be used as the sole basis for medical decisions.
+
+---
+
+🔭 Future Scope
+
+Potential future improvements include:
+
+- Support for additional proteins and reference databases.
+- Improved mutation-effect analysis using validated, multi-protein datasets.
+- More robust structure-aware residue mapping.
+- Evidence-linked AI explanations and source citations.
+- Better uncertainty reporting and scientific benchmarking.
+- Expanded research-report exports.
+- Additional automated tests and reproducible analysis pipelines.
+
+These are development opportunities, not claims that every capability is already implemented.
+
+---
+
+👩‍🔬 Who Is It For?
+
+ProteinGuard is designed for:
+
+- Biotechnology and bioinformatics students
+- Computational biology researchers
+- Protein science enthusiasts
+- Students exploring structural biology and mutation analysis
+- Developers building tools at the intersection of biology and AI
+
+---
+
+🤝 Contributing
+
+Contributions that improve scientific accuracy, usability, documentation, reproducibility, testing, or support for additional proteins are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make a focused change.
+4. Add tests where appropriate.
+5. Submit a pull request with a clear explanation of the change.
+
+---
+
+🎯 Hackathon Vision
+
+ProteinGuard aims to bridge the gap between protein sequence variation and interpretable molecular analysis.
+
+By combining bioinformatics workflows, structural exploration, and AI-assisted scientific reasoning, the project seeks to make mutation investigation more approachable while keeping scientific evidence and uncertainty at the center.
+
+ProteinGuard — Explore the mutation. Understand the evidence. Investigate the impact.
+
+---
+
+📜 License
+
+Add the project's chosen open-source license here after selecting and committing the corresponding "LICENSE" file.
